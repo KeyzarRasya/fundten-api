@@ -20,9 +20,5 @@ const upload = multer({storage}).single('files');
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/offering",isLoggedIn, upload, makeOffering);
-router.get('/logout', (req, res) => {
-    res.clearCookie('token');
-    res.send("oke")
-})
 
 module.exports = router;
