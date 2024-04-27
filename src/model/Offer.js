@@ -12,7 +12,18 @@ const offerSchema = new mongoose.Schema({
     totalFunded:{
         type:Number,
         default:0
+    },
+    proyeksi:{
+        type:String,
+        require:true
+    },
+    isVerified:{
+        type:Boolean,
+        require:true,
+        default:false
     }
 })
 
 const Model = mongoose.model('Offer', offerSchema);
+
+module.exports = Model;

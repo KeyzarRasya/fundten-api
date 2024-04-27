@@ -23,10 +23,11 @@ app.use(session({
     resave:false
 }))
 
+app.use(express.static('uploads'));
+
 app.use('/umkm', umkmRoutes);
 
 app.get("/", (req, res) => {
-    res.cookie('user', 'key', {signed:true})
 })
 
 app.listen(port, () => {

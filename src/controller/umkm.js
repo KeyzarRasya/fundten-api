@@ -1,4 +1,4 @@
-const {save, loginAccount} = require('../service/umkm');
+const {save, loginAccount, createOffer} = require('../service/umkm');
 const jwt = require('jsonwebtoken');
 
 const signup = async (req, res) => {
@@ -14,8 +14,15 @@ const login = async(req, res) => {
         res.send(account);
     }
     const token = await jwt.sign({user:account.user}, process.env.JWT, {expiresIn:'1h'});
-    res.cookie(token, token, {signed:true});
+    res.cookie("token", token, {signed:true});
     res.send({status:account.status, token});
 }
 
-module.exports = {signup, login};
+const makeOffering = async(req, res) => {
+    const {umkmid = "662c9f7ecc5f468928a238fb", amount = 1000000} = req.body;
+    const files = req.file.filename;
+    const account = await createOffer(req.signedCookies, {umkmid, amount, proyeksi:files});
+    res.send(account);
+}
+
+module.exports = {signup, login, makeOffering};

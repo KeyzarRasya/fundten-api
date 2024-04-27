@@ -1,4 +1,6 @@
+const { jwtDecode } = require('jwt-decode');
 const Umkm = require('../model/umkm');
+const Offer = require('../model/Offer');
 const bcrypt = require('bcrypt');
 
 const save = async (umkm) => {
@@ -21,4 +23,16 @@ const loginAccount = async(credentials) => {
     return isValid? {status:200, message:"Login successfully", user:findAccount} : {status:401, message:"Wrong password"};
 }
 
-module.exports = {save, loginAccount};
+const createOffer = async(signedCookie ,offer) => {
+    const cookieAcc = await jwtDecode(signedCookie.token);
+    console.log(cookieAcc);
+    const umkmAccount = await Umkm.findById(cookieAcc.user._id);
+    if(!umkmAccount){
+        return {status:401, message:'Please login first'};
+    }
+    offer.umkmId = umkmAccount._id;
+    const newOffer = new Offer(offer);
+    return newOffer;
+}
+
+module.exports = {save, loginAccount, createOffer};
