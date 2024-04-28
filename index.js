@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const mongoose = require('mongoose');
 const umkmRoutes = require('./src/routes/Umkm');
+const offerRoutes = require('./src/routes/Offer');
 
 mongoose.connect(process.env.MONGO_URI)
 .then(res => console.log('Connected to database'))
@@ -26,6 +27,7 @@ app.use(session({
 app.use(express.static('uploads'));
 
 app.use('/umkm', umkmRoutes);
+app.use('/offer', offerRoutes);
 
 app.get("/", (req, res) => {
 })

@@ -1,5 +1,5 @@
 const express = require('express');
-const {signup, login, makeOffering} = require('../controller/umkm');
+const {signup, login, makeOffering, deleteOffer} = require('../controller/umkm');
 const {isLoggedIn, isAlreadyOffering} = require('../middleware/cookie');
 const multer = require('multer');
 const path = require('path')
@@ -20,5 +20,9 @@ const upload = multer({storage});
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/offering", isLoggedIn, isAlreadyOffering, upload.single('files'), makeOffering);
+router.get("/logout", (req, res) => {
+    res.clearCookie('token')
+    res.send("Logout")
+})
 
 module.exports = router;
