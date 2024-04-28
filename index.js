@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const umkmRoutes = require('./src/routes/Umkm');
 const offerRoutes = require('./src/routes/Offer');
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGODB_URI)
 .then(res => console.log('Connected to database'))
 .catch(err => console.log(err));
 
