@@ -21,7 +21,7 @@ const umkmSchema = new mongoose.Schema({
         type:String,
         require:true
     },
-    offering:{type:mongoose.Schema.ObjectId, ref:'Offer'}
+    offering:{type:mongoose.Schema.ObjectId, ref:'Offer', default:null}
 })
 
 const Model = mongoose.model('Umkm', umkmSchema);

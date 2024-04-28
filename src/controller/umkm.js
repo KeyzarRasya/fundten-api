@@ -22,6 +22,12 @@ const makeOffering = async(req, res) => {
     const {umkmid = "662c9f7ecc5f468928a238fb", amount = 1000000} = req.body;
     const files = req.file.filename;
     const account = await createOffer(req.signedCookies, {umkmid, amount, proyeksi:files});
+    if(account.status !== 200){
+        return res.send(account);
+    }
+    console.log(account.umkmAccount);
+    const token = await jwt.sign({user:account.umkmAccount}, process.env.JWT, {expiresIn:'1h'});
+    res.cookie("token", token, {signed:true});
     res.send(account);
 }
 

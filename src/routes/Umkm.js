@@ -1,6 +1,6 @@
 const express = require('express');
 const {signup, login, makeOffering} = require('../controller/umkm');
-const {isLoggedIn} = require('../middleware/cookie');
+const {isLoggedIn, isAlreadyOffering} = require('../middleware/cookie');
 const multer = require('multer');
 const path = require('path')
 
@@ -15,10 +15,10 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({storage}).single('files');
+const upload = multer({storage});
 
 router.post("/signup", signup);
 router.post("/login", login);
-router.post("/offering",isLoggedIn, upload, makeOffering);
+router.post("/offering", isLoggedIn, isAlreadyOffering, upload.single('files'), makeOffering);
 
 module.exports = router;

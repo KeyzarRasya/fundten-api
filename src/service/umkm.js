@@ -30,9 +30,16 @@ const createOffer = async(signedCookie ,offer) => {
     if(!umkmAccount){
         return {status:401, message:'Please login first'};
     }
+    console.log(umkmAccount.offering);
+    if(umkmAccount.offering){
+        return {status:406, message:'you already have one offering'}
+    }
     offer.umkmId = umkmAccount._id;
     const newOffer = new Offer(offer);
-    return newOffer;
+    umkmAccount.offering = newOffer;
+    await umkmAccount.save();
+    await newOffer.save();
+    return {status:200, message:'Offer is successfully created, wait for admin to verify', umkmAccount};
 }
 
 module.exports = {save, loginAccount, createOffer};
