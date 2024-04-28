@@ -30,7 +30,7 @@ app.use('/umkm', umkmRoutes);
 app.use('/offer', offerRoutes);
 
 app.get("/", (req, res) => {
-    res.send('oke')
+    res.send('okeh')
 })
 
 app.listen(port, () => {
